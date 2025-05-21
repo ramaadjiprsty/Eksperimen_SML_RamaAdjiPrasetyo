@@ -3,7 +3,7 @@ import argparse
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.impute import SimpleImputer
-from sklearn.preprocessing import OneHotEncoder
+from sklearn.preprocessing import OneHotEncoder, LabelEncoder
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 
@@ -58,10 +58,13 @@ def run_preprocessing(input_path: str, output_dir: str, label_column: str, test_
     X = df.drop(columns=[label_column])
     y = df[label_column]
 
+    label_encoder = LabelEncoder()
+    y_encoded = label_encoder.fit_transform(y)
+
     preprocessor, categorical_cols = build_preprocessor(df, label_column)
 
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=test_size, random_state=random_state, stratify=y
+    X_train, X_test, y_train_enc, y_test_enc = train_test_split(
+        X, y_encoded, test_size=test_size, random_state=random_state, stratify=y
     )
 
     X_train_proc = preprocessor.fit_transform(X_train)
@@ -70,9 +73,9 @@ def run_preprocessing(input_path: str, output_dir: str, label_column: str, test_
     feature_names = preprocessor.get_feature_names_out()
 
     train_df = pd.DataFrame(X_train_proc, columns=feature_names)
-    train_df[label_column] = y_train.reset_index(drop=True)
+    train_df[label_column] = y_train_enc
     test_df = pd.DataFrame(X_test_proc, columns=feature_names)
-    test_df[label_column] = y_test.reset_index(drop=True)
+    test_df[label_column] = y_test_enc
 
     train_path = os.path.join(output_dir, 'car_evaluation_train_preprocessed.csv')
     test_path = os.path.join(output_dir, 'car_evaluation_test_preprocessed.csv')
