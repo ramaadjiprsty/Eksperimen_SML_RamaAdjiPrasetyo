@@ -26,7 +26,7 @@ jobs:
 
     - name: Run preprocessing script
       run: |
-        python automate_RamaAdjiPrasetyo.py \
+        python preprocessing/automate_RamaAdjiPrasetyo.py \
           --input raw_dataset_car_evaluation.csv \ 
           --output preprocessing/preprocessed_data/
 
