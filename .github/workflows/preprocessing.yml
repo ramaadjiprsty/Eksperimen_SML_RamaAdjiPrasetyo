@@ -1,5 +1,8 @@
 name: Preprocess Car Evaluation Dataset
 
+permissions:
+  contents: write
+  
 on:
   push:
     branches:
