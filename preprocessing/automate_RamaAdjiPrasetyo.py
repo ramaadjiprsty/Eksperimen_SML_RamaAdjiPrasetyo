@@ -74,8 +74,8 @@ def run_preprocessing(input_path: str, output_dir: str, label_column: str, test_
     test_df = pd.DataFrame(X_test_proc, columns=feature_names)
     test_df[label_column] = y_test.reset_index(drop=True)
 
-    train_path = os.path.join(output_dir, 'train_preprocessed.csv')
-    test_path = os.path.join(output_dir, 'test_preprocessed.csv')
+    train_path = os.path.join(output_dir, 'car_evaluation_train_preprocessed.csv')
+    test_path = os.path.join(output_dir, 'car_evaluation_test_preprocessed.csv')
     train_df.to_csv(train_path, index=False)
     test_df.to_csv(test_path, index=False)
 
