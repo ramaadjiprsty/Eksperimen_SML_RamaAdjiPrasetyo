@@ -27,7 +27,7 @@ jobs:
     - name: Run preprocessing script
       run: |
         python preprocessing/automate_RamaAdjiPrasetyo.py \
-          --input raw_dataset_car_evaluation.csv \ 
+          --input raw_dataset_car_evaluation.csv \
           --output preprocessing/preprocessed_data/
 
     - name: Commit and push preprocessed dataset
